@@ -1,0 +1,9 @@
+
+dependencies {
+    compile project(":service:aurea-boot-autoconfigure:data")
+    compile project(":service:aurea-boot-autoconfigure:mail")
+    compile project(":service:aurea-boot-module:data-user")
+    compile project(":service:aurea-boot-autoconfigure:oauth2")
+    compile project(":service:aurea-boot-autoconfigure:rest-api")
+    compile 'org.springframework.boot:spring-boot-autoconfigure'
+}

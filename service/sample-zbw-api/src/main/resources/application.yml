@@ -1,0 +1,93 @@
+aurea:
+  api:
+    info:
+      title: Zero Based Website API
+      license: UNLICENSED
+      version: 1.0.0
+    cors:
+      allowedOrigins: http://localhost:4000, http://dlb1.aureacentral.com:10234
+      allowedHeaders: Content-Type,Authorization,Pragma
+      allowedMethods: POST,PUT,PATCH,GET,OPTIONS,DELETE
+      maxAge: 3600
+    securitySchemeKeyName: ZeroBasedWebsite
+
+server.error.whitelabel.enabled: false
+
+spring:
+  profiles:
+    active: mail-local
+  datasource:
+    url: jdbc:h2:mem:zwb_h2_db
+    driver-class-name: org.h2.Driver
+  data:
+    rest:
+      base-path: /api/data
+  jpa:
+    show-sql: true
+  jackson:
+    serialization:
+      FAIL_ON_EMPTY_BEANS: false
+
+springfox:
+  documentation:
+    swagger:
+      v2:
+        path: /api-docs
+
+security:
+  oauth2:
+    client:
+      client-id: zwbapp
+      client-secret: zwbsecret
+    authorization:
+      check-token-access: isAuthenticated()
+
+---
+spring:
+  profiles: mail-local
+  mail:
+    host: localhost
+    port: 25
+    username:
+    password:
+    properties:
+      mail:
+        smtp:
+          auth: false
+          starttls:
+            enable: false
+
+---
+spring:
+  profiles: mail-gmail
+  mail:
+    # Gmail properties
+    host: smtp.gmail.com
+    port: 587
+    username: ${MAIL_HOST_USERNAME}
+    password: ${MAIL_HOST_PASSWORD}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+---
+spring:
+  profiles: mail-aws-ses
+  mail:
+    # AWS SES properties
+    host: email-smtp.us-west-2.amazonaws.com
+    username: ${MAIL_HOST_USERNAME}
+    password: ${MAIL_HOST_PASSWORD}
+    properties:
+      mail:
+        transport:
+          protocol: smtp
+        smtp:
+          port: 25
+          auth: true
+          starttls:
+            enable: true
+            required: true

@@ -1,0 +1,25 @@
+@import '~@devfactory/ngx-df/core/theming/aurea-skin/theming';
+@import '~@devfactory/ngx-df/core/theming/aurea-skin/alert';
+@import 'components/button';
+@import '~@devfactory/ngx-df/core/theming/aurea-skin/dropdown';
+@import '~@devfactory/ngx-df/core/theming/aurea-skin/datepicker';
+@import 'components/input';
+@import '~@devfactory/ngx-df/core/theming/aurea-skin/mixins';
+@import '~@devfactory/ngx-df/core/theming/aurea-skin/modal';
+@import '~@devfactory/ngx-df/core/theming/aurea-skin/profile';
+@import 'components/select';
+@import '~@devfactory/ngx-df/core/theming/aurea-skin/slide-toggle';
+@import '~@devfactory/ngx-df/core/theming/aurea-skin/table';
+@import '~@devfactory/ngx-df/core/theming/aurea-skin/tabs';
+@import '~@devfactory/ngx-df/core/theming/aurea-skin/timepicker';
+@import '~@devfactory/ngx-df/core/theming/aurea-skin/topbar';
+@import '~@devfactory/ngx-df/core/theming/aurea-skin/tree-view';
+@import '~@devfactory/ngx-df/core/theming/aurea-skin/utils';
+@import 'components/sidebar';
+@import '~@devfactory/ngx-df/core/theming/aurea-skin/grid';
+@import '~@devfactory/ngx-df/core/theming/aurea-skin/validation-messages';
+@import 'components/badge';
+
+label {
+  margin: 0;
+}

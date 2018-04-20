@@ -1,0 +1,107 @@
+@import '../palette';
+
+button[df-button],
+a[df-button],
+.df-button {
+  box-shadow: none !important;
+  border-radius: 3px;
+  font-size: 14px;
+  height: 32px;
+  font-family: 'Roboto', Helvetica, sans-serif;
+  font-weight: 500;
+
+  &:hover {
+    box-shadow: none !important;
+  }
+
+  .icon-left {
+    margin-left: -5px;
+    margin-right: 5px;
+  }
+
+  &.btn {
+    &--sm {
+      height: 25px;
+    }
+  }
+}
+
+button[df-button].btn-clean {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+button[df-button].btn-primary {
+  background-color: $au-green;
+  border-color: $au-green;
+  
+  &:hover {
+    background-color: $au-green-hover;
+    border-color: $au-green-hover;
+  }
+  
+  &:not([disabled]):not(.disabled):active {
+    background-color: $au-green-active;
+    border-color: $au-green-active;
+  }
+}
+
+button[df-button].btn-red {
+  background-color: $au-red;
+  border-color: $au-red;
+
+  &:hover {
+    background-color: $au-red-hover;
+    border-color: $au-red-hover;
+  }
+  
+  &:not([disabled]):not(.disabled):active {
+    background-color: $au-red-active;
+    border-color: $au-red-active;
+  }
+}
+
+button[df-button].btn-blue {
+  background-color: $au-blue;
+  border-color: $au-blue;
+
+  &:hover {
+    background-color: $au-blue-hover;
+    border-color: $au-blue-hover;
+  }
+  
+  &:not([disabled]):not(.disabled):active {
+    background-color: $au-blue-active;
+    border-color: $au-blue-active;
+  }
+}
+
+button[df-button].btn-black {
+  background-color: $au-gray-main;
+  border-color: $au-gray-main;
+}
+
+.df-button-loader {
+  border-bottom-width: .15em;
+  border-top-width: .15em;
+  border-right-width: .15em;
+  border-left-width: .15em;
+}
+
+button[df-button]::before,
+a[df-button]::before,
+.df-button::before {
+  border-radius: 3px;
+}
+
+.df-button-loader,
+.df-button-loader::before {
+  width: 1.15em;
+  height: 1.15em;
+}
+
+.df-button__content {
+  position: relative;
+  font-size: 13px;
+}

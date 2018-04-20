@@ -1,0 +1,27 @@
+version: '3'
+
+services:
+  sample-zbw-ui:
+    image: sample-zbw-ui:$tag
+    container_name: sample-zbw-ui
+    ports:
+      - 10234:80
+    deploy:
+      mode: global
+      update_config:
+        delay: 10s
+      restart_policy:
+        condition: on-failure
+
+  sample-zbw-api:
+    image: sample-zbw-api:$tag
+    container_name: sample-zbw-api
+    ports:
+      - 10233:8080
+    deploy:
+      mode: global
+      update_config:
+        parallelism: 1
+        delay: 10s
+      restart_policy:
+        condition: on-failure

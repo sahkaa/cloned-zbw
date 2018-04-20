@@ -1,0 +1,13 @@
+rootProject.name = 'aurea-zero-based'
+
+include ':service:sample-zbw-api',
+        ':service:aurea-boot-autoconfigure:data',
+        ':service:aurea-boot-autoconfigure:mail',
+        ':service:aurea-boot-autoconfigure:rest-api',
+        ':service:aurea-boot-autoconfigure:rest-api-user',
+        ':service:aurea-boot-autoconfigure:oauth2',
+        ':service:aurea-boot-module:data-user',
+        ':service:aurea-boot-starter:rest-api-oauth2-starter',
+        ':service:aurea-boot-starter:rest-api-user-oauth2-starter',
+        ':service:base:logging',
+        ':service:base:logging-test'

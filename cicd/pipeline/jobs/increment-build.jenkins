@@ -1,0 +1,53 @@
+#!groovy
+//This is the increment pipeline which will normally be triggered manually (but can be done on every pull request)
+//and will try to do the build and deploy for the service, which includes:
+//Checkout GIT repo, compile, run code quality checks, run unit/integration/perf tests and build docker image
+
+def pipelineScriptPath = "cicd/pipeline/"
+def buildFlow
+
+pipeline {
+    agent {
+        label 'npm'
+    }
+    environment {
+        DOCKER_HOST = 'tcp://dlb1.aureacentral.com:2375'
+    }
+    stages {
+        stage('Checkout code') {
+            steps {
+                script {
+                    buildFlow = load pipelineScriptPath + "util/buildUtil.groovy"
+                    buildFlow.checkout()
+                }
+            }
+        }
+        stage('Build Service and UI') {
+            parallel {
+                stage('Build UI') {
+                    steps {
+                        script {
+                            buildFlow.buildUI()
+                        }
+                    }
+                }
+                stage('Build service') {
+                    steps {
+                        script {
+                            buildFlow.buildServiceWithAline()
+                        }
+                    }
+                }
+            }
+        }
+    }
+    post {
+        always {
+            script {
+                def notifyFlow = load pipelineScriptPath + "util/notifyUtil.groovy"
+                notifyFlow.notifyBuild(currentBuild.result)
+                deleteDir()
+            }
+        }
+    }
+}

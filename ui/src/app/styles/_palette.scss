@@ -1,0 +1,18 @@
+// Including this file instead of the library palette directly will give you
+// great customization as you could easily overwrite any of the variables
+@import '~@devfactory/ngx-df/core/theming/palette';
+@import '~@devfactory/ngx-df/core/theming/aurea-skin/theming';
+
+$main-bg-color: map_get($df-light, 2);
+$main-text-color: map_get($df-dark, 5);
+
+$ka-main: #f15713;
+
+$au-green-hover: #04a675;
+$au-green-active: #009765;
+$au-red-hover: #da4050;
+$au-red-active: #c33046;
+$au-blue-hover: #0097cd;
+$au-blue-active: #007bad;
+
+$au-hover-background: #edf1f3;

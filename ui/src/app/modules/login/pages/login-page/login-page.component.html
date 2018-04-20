@@ -1,0 +1,40 @@
+<div class="login">
+  <app-logo class="d-flex align-items-center p-3"></app-logo>
+
+  <form class="p-4 px-sm-5 py-sm-4" [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="alert alert-danger" role="alert" *ngIf="alert.show">
+      <i class="fa fa-minus-circle" aria-hidden="true"></i>
+      <p>{{alert.message}}</p>
+    </div>
+    <df-input-container>
+      <input type="text"
+             id="email"
+             formControlName="email"
+             #email
+             placeholder="Email address"
+             (blur)="onEmailBlur()">
+    </df-input-container>
+    <p class="mb-1 df-input__error" [class.invisible]="form.controls?.email?.valid">
+      {{form.controls?.email?.errors?.invalidEmail}}
+    </p>
+    <df-input-container class="mb-5">
+      <input type="password"
+             id="password"
+             formControlName="password"
+             placeholder="Password">
+    </df-input-container>
+    <button class="btn-primary mb-4 w-100"
+            type="submit"
+            df-button
+            [loading]="loading"
+            [disabled]="isDisabled">
+      Login
+    </button>
+    <div class="d-flex justify-content-between align-items-center">
+      <df-checkbox class="mb-2 mb-sm-0" formControlName="remember">Remember me</df-checkbox>
+      <a class="link d-block text-right" routerLink="/forgot-password">Forgot password?</a>
+    </div>
+  </form>
+</div>
+
+<app-copy-right class="d-flex align-items-center justify-content-between w-100 p-4"></app-copy-right>

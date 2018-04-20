@@ -1,0 +1,198 @@
+@import '~bootstrap/scss/functions';
+@import '~bootstrap/scss/variables';
+@import '~bootstrap/scss/mixins/breakpoints';
+@import '~@devfactory/ngx-df/core/style/variables';
+@import 'palette';
+
+:host {
+  ::ng-deep {
+    df-topbar {
+      &.df-topbar {
+        height: 60px;
+      }
+
+      .df-topbar__center {
+        flex-grow: 1;
+      }
+
+      nav {
+        background-color: map-get($au-neutral, 5);
+      }
+
+      div.df-topbar-links {
+        position: static;
+        left: auto;
+        height: auto;
+
+        a {
+          height: auto;
+          padding: 0 14px;
+        }
+      }
+
+      .df-topbar {
+        &__center {
+          display: flex;
+          align-items: stretch;
+          align-self: stretch;
+        }
+      }
+    }
+
+    button.df-hamburger {
+      display: none;
+    }
+
+    df-sidebar {
+      background-color: map-get($au-neutral, 5);
+      overflow: auto;
+
+      .df-sidebar {
+        position: relative;
+        top: 0;
+        height: 100%;
+        border: none;
+        transform: none;
+        background-color: map-get($au-neutral, 5);
+
+        &__item {
+          &__menu {
+            overflow: hidden;
+          }
+
+          &--active {
+            box-shadow: none;
+          }
+        }
+
+        &--open {
+          width: 57px;
+        }
+
+        .sidebar__secondary-group {
+          position: absolute;
+          bottom: 0;
+        }
+      }
+
+      &.ng-animating {
+        .df-sidebar__item__menu:not(.df-sidebar__item__menu--active) {
+          height: 0px;
+        }
+      }
+    }
+  }
+}
+
+.left-group {
+  width: 175px;
+  background-color: $ka-main;
+}
+
+.hamburger {
+  background: none;
+  border: none;
+
+  &__wrapper {
+    width: 20px;
+    height: 15px;
+  }
+
+  &__line {
+    width: 20px;
+    height: 2px;
+    background-color: white;
+  }
+}
+
+.overlay {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: map-get($df-dark, 5);
+  opacity: 0.7;
+  z-index: $z-index-4;
+}
+
+.no-scroll {
+  overflow: hidden;
+}
+
+.sub-menu {
+  height: 40px;
+  background: map-get($au-neutral, 4);
+}
+
+.profile {
+  padding: 0 11px;
+  color: white;
+
+  &__name {
+    font-size: 16px;
+  }
+
+  &__email {
+    opacity: 0.7;
+  }
+
+  &__status {
+    position: relative;
+    top: 1px;
+    font-size: 12px;
+
+    &--ONLINE {
+      color: $au-green;
+    }
+  }
+
+  &__wrapper {
+    margin-right: 10px;
+
+    .dropdown {
+      &--border {
+        border-bottom: 1px solid $au-gray-main;
+      }
+    }
+  }
+}
+
+.df-input-container {
+  .search {
+    &__input {
+      color: white;
+    }
+  }
+}
+
+.portal-tabs {
+  &__item {
+    border-bottom: 1px solid map-get($au-gray, 2);
+  }
+
+  &__remove {
+    color: map-get($au-neutral, 5);
+  }
+}
+
+.search {
+  width: 150px;
+}
+
+@include media-breakpoint-down(md) {
+  :host {
+    ::ng-deep {
+      df-topbar {
+        &.df-topbar {
+          height: 46px;
+        }
+      }
+    }
+  }
+
+  df-sidebar {
+    position: absolute;
+    height: 100%;
+    box-shadow: 0 1px 5px 0 rgba(#000, .35);
+    z-index: $z-index-5;
+  }
+}

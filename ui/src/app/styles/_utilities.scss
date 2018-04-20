@@ -1,0 +1,13 @@
+@import '~bootstrap/scss/functions';
+@import '~bootstrap/scss/variables';
+@import '~bootstrap/scss/mixins/breakpoints';
+
+.text-break {
+  word-break: break-all;
+}
+
+@include media-breakpoint-down(xs) {
+  .text-sm-break {
+    word-break: break-all;
+  }
+}

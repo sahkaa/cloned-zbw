@@ -1,0 +1,20 @@
+dependencies {
+    compile "ch.qos.logback:logback-classic"
+
+    compile('biz.paluch.logging:logstash-gelf') {
+        // one of the transitive dependecies incorrectly pulls this in
+        exclude group: 'junit'
+    }
+
+    compile 'org.apache.commons:commons-lang3'
+    compile 'com.google.guava:guava'
+    compile 'commons-net:commons-net'
+
+    // janino required for "Conditional processing of configuration files"
+    //   see http://logback.qos.ch/manual/configuration.html
+    compile 'org.codehaus.janino:janino'
+
+    testCompile 'org.mockito:mockito-core'
+    testCompile 'junit:junit'
+    testCompile project(":service:base:logging-test")
+}

@@ -1,0 +1,91 @@
+df-input-container {
+  input[type='text'],
+  input[type='email'],
+  input[type='number'],
+  input[type='password'],
+  input[type='search'],
+  input[type='url'],
+  textarea {
+    background: none;
+    border-radius: 0;
+    border: none;
+    border-bottom: 1px solid #cbd1d3;
+    font-size: 1em;
+    color: map-get($au-neutral, 4);
+    padding: 0;
+
+    &:focus {
+      box-shadow: none;
+      border-bottom: 1px solid $au-green;
+    }
+  }
+
+  textarea {
+    border: 1px solid #cbd1d3;
+    height: auto;
+
+    &:focus {
+      border-color: $au-green;
+    }
+  }
+
+  .df-input__error-message {
+    margin-top: 5px;
+    padding-left: 2px;
+    color: #f44346;
+    font-size: .8em;
+    font-weight: 600;
+  }
+}
+
+.df-input-container {
+  @extend df-input-container;
+
+  // &--invalid {
+  //   input.df-input {
+  //     border-color: transparent;
+  //     border-bottom-color: $au-red !important;
+  //   }
+  // }
+
+  input.df-input.ng-invalid.ng-dirty {
+    border-color: transparent;
+    border-bottom-color: $au-red !important;
+  }
+}
+
+.df-input-container input,
+df-input-container input {
+  height: 29px;
+  width: 100%;
+}
+
+.df-input__error-message {
+  margin-top: 5px;
+  padding-left: 2px;
+  color: #f44346;
+  font-size: .8em;
+  font-weight: 600;
+}
+
+.df-input__error {
+  font-size: 13px;
+  color: $au-red;
+  min-height: 21px;
+}
+
+.au-input {
+  height: 32px;
+  background: none;
+  transition: all .5s ease;
+  border-bottom: 1px solid map-get($au-gray, 2);
+
+  &:focus {
+    border-bottom-color: $au-green;
+  }
+
+  &--light {
+    border-bottom: 1px solid #fff;
+    color: #fff;
+  }
+}

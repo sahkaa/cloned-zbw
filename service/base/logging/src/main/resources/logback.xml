@@ -1,0 +1,85 @@
+<configuration debug="${LOGBACK_DEBUG:-false}">
+    <include resource="logback-include.xml" optional="true"/>
+    <include resource="logback-newrelic.xml" optional="true"/>
+    <if condition='isNull("FILE_SWITCH_OFF")'>
+        <then>
+            <appender name="FILE_APPENDER" class="ch.qos.logback.core.rolling.RollingFileAppender">
+                <file>${LOGS_DIR:-logs}/${HOSTNAME:-application}.log</file>
+                <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+                    <fileNamePattern>${LOGS_DIR:-logs}/${HOSTNAME:-app}.log.%d{yyyy-MM-dd}.%i.gz</fileNamePattern>
+                    <!-- keep 2 days' worth of history -->
+                    <maxHistory>2</maxHistory>
+                    <totalSizeCap>1GB</totalSizeCap>
+                    <maxFileSize>50MB</maxFileSize>
+                </rollingPolicy>
+                <encoder>
+                    <pattern>
+                        ${custom_patern:-%d{yyyy-MM-dd HH:mm:ss.SSSXXX} [%thread] [%mdc] %-5level %logger{36} - %msg%n}
+                    </pattern>
+                </encoder>
+            </appender>
+        </then>
+    </if>
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>
+                ${custom_patern:-%d{yyyy-MM-dd HH:mm:ss.SSSXXX} [%thread] [%mdc] %-5level %logger{36} - %msg%n}
+            </pattern>
+        </encoder>
+    </appender>
+
+    <appender name="GELF" class="biz.paluch.logging.gelf.logback.GelfLogbackAppender">
+
+        <host>${gelf.protocol:-udp}:graylog2.devfactory.com</host>
+        <port>12201</port>
+        <version>1.1</version>
+        <facility>${FACILITY:-zero}</facility>
+        <extractStackTrace>true</extractStackTrace>
+        <!-- https://github.com/mp911de/logstash-gelf/blob/4f55752357973d476de94b15dba80f8c4d32b266/src/site/markdown/stack-trace-filter.md -->
+        <filterStackTrace>true</filterStackTrace>
+        <mdcProfiling>false</mdcProfiling>
+        <timestampPattern>yyyy-MM-dd HH:mm:ss,SSSXXX</timestampPattern>
+        <maximumMessageSize>2097152
+        </maximumMessageSize> <!-- 2 mB to match https://graylog2.devfactory.com/system/inputs  -->
+        <!-- This are static fields -->
+        <additionalFields>environment=${APP_ENVIRONMENT:-${ENVIRONMENT:-unknown}}</additionalFields>
+        <additionalFields>app_context=${APP_LOGGING_CONTEXT:-${APP_CONTEXT:-unknown}}</additionalFields>
+        <!-- This is how we add the context to the messages -->
+        <includeFullMdc>true</includeFullMdc>
+    </appender>
+
+    <appender name="ASYNC" class="ch.qos.logback.classic.AsyncAppender">
+        <appender-ref ref="GELF"/>
+        <queueSize>512</queueSize> <!-- worst cas size: X  2Mb ( 1GB ) -->
+        <includeCallerData>true</includeCallerData>
+        <!-- when queue capacity less than this %, discard DEBUG and INFO messages -->
+        <discardingThreshold>10</discardingThreshold>
+    </appender>
+
+    <root level="${app.logging.root:-debug}">
+        <if condition='!isNull("GRAYLOG_SWITCH_ON")'>
+            <then>
+                <appender-ref ref="ASYNC"/>
+            </then>
+        </if>
+        <if condition='isNull("STDOUT_SWITCH_OFF")'>
+            <then>
+                <appender-ref ref="STDOUT"/>
+            </then>
+        </if>
+        <if condition='isNull("FILE_SWITCH_OFF")'>
+            <then>
+                <appender-ref ref="FILE_APPENDER"/>
+            </then>
+        </if>
+    </root>
+
+    <!-- packages with reduced logging -->
+
+    <!-- Log at different levels for different 3rd party components   -->
+    <logger name="org.apache" level="${app.logging.3rdparty.apache:-info}"/>
+    <logger name="org.springframework" level="${app.logging.3rdparty.spring:-info}"/>
+    <logger name="org.hibernate" level="${app.logging.3rdparty.hibernate:-info}"/>
+
+</configuration>

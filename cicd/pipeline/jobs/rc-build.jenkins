@@ -1,0 +1,90 @@
+#!groovy
+//This is the RC pipeline which will normally run once every night
+//and will build a shippable output for the service, which includes:
+//build, deploy docker image and trigger deployment pipeline
+
+def pipelineScriptPath = "cicd/pipeline/"
+def sanitizedBranchName = "develop"
+def buildVersion = env.BUILD_NUMBER
+def buildFlow
+
+pipeline {
+    agent {
+        label 'npm&docker&&docker-compose&&docker-tls-cert'
+    }
+    triggers {
+        pollSCM('23 0 * * *')
+    }
+    environment {
+        DOCKER_HOST = 'tcp://dlb1.aureacentral.com:2375'
+    }
+    stages {
+        stage('Checkout code') {
+            steps {
+                script {
+                    buildFlow = load pipelineScriptPath + "util/buildUtil.groovy"
+                    buildFlow.checkout()
+                }
+            }
+        }
+        stage('Build Service and UI') {
+            parallel {
+                stage('Build UI') {
+                    steps {
+                        script {
+                            buildFlow.buildUI()
+                        }
+                    }
+                }
+                stage('Build service') {
+                    steps {
+                        script {
+                            buildFlow.buildService()
+                        }
+                    }
+                }
+            }
+        }
+        stage('Create docker images and push to swarm registry') {
+            parallel {
+                stage('Build and push service docker image') {
+                    steps {
+                        script {
+                            def serviceWorkspace = pwd() + "/service/sample-zbw-api"
+                            def serviceDockerImageName = "sample-zbw-api"
+                            buildFlow.buildDockerImage(sanitizedBranchName, buildVersion, serviceWorkspace, serviceDockerImageName)
+                            buildFlow.pushDockerImageToRegistry(sanitizedBranchName, buildVersion, serviceDockerImageName)
+                        }
+                    }
+
+                }
+                stage('Build and push UI docker image') {
+                    steps {
+                        script {
+                            def uiWorkspace = pwd() + "/ui"
+                            def uiDockerImagename = "sample-zbw-ui"
+                            buildFlow.buildDockerImage(sanitizedBranchName, buildVersion, uiWorkspace, uiDockerImagename)
+                            buildFlow.pushDockerImageToRegistry(sanitizedBranchName, buildVersion, uiDockerImagename)
+                        }
+                    }
+                }
+            }
+        }
+        stage('Deployment to dev env') {
+            steps {
+                script {
+                    def deployFlow = load pipelineScriptPath + "util/deployUtil.groovy"
+                    deployFlow.deploy(sanitizedBranchName, buildVersion)
+                }
+            }
+        }
+    }
+    post {
+        always {
+            script {
+                def notifyFlow = load pipelineScriptPath + "util/notifyUtil.groovy"
+                notifyFlow.notifyBuild(currentBuild.result)
+            }
+        }
+    }
+}

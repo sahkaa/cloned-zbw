@@ -1,0 +1,3 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com.aurea.boot.autoconfigure.api.user.config.ApiUserAutoConfiguration,\
+  com.aurea.boot.autoconfigure.api.user.config.ResourceServerAutoConfiguration

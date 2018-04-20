@@ -1,0 +1,31 @@
+aurea:
+  api:
+    info:
+      title: Zero Based Website API
+      license: UNLICENSED
+      version: 1.0.0
+    cors:
+      allowedOrigins: http://localhost:4200
+      allowedHeaders: Content-Type,Authorization,Pragma
+      allowedMethods: POST,PUT,PATCH,GET,OPTIONS,DELETE
+      maxAge: 3600
+    securitySchemeKeyName: ZeroBasedWebsite
+
+spring:
+  mail:
+    host: localhost
+    port: 25
+    username:
+    password:
+    properties:
+      mail:
+        smtp:
+          auth: false
+          starttls:
+            enable: false
+
+security:
+  oauth2:
+    client:
+      client-id: test-id
+      client-secret: test-secret

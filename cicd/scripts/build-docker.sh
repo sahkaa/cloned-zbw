@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+BRANCH=$1
+SHA1=$2
+BUILDDIR=$3
+NAME=$4
+
+VERSION=$BRANCH-$SHA1
+
+docker build -t $NAME:$VERSION $BUILDDIR

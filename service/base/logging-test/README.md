@@ -1,0 +1,1 @@
+# Logging Test base module

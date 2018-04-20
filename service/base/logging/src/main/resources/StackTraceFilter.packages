@@ -1,0 +1,9 @@
+org.h2
+org.hibernate
+org.junit
+java.lang.reflect.Method
+sun.
+com.sun
+junit.framework
+javax.servlet
+org.springframework.aop

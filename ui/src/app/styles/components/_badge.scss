@@ -1,0 +1,15 @@
+@import '../palette';
+@import '../variables';
+
+.df-badge {
+  width: auto;
+  height: auto;
+  padding: 3px 5px 3px 4px;
+  border-radius: 8px;
+  font-family: $font-family;
+
+  &--bottom-right {
+    bottom: -9px;
+    right: -9px;
+  }
+}

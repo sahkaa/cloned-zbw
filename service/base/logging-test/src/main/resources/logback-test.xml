@@ -1,0 +1,36 @@
+<!-- This gets loaded before logback.xml and it's a way of preventing logs from unittests and other tests going to graylog via the config in logging-core -->
+<configuration>
+  <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+    <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+      <level>${TEST_CONSOLE_LEVEL:-DEBUG}</level>
+    </filter>
+    <encoder>
+      <pattern>%gray(%d{yyyy-MM-dd HH:mm:ss.SSSXXX}) %boldWhite([%thread]) %yellow(%mdc) %highlight(%-5level)
+        %cyan(%logger{36}) %highlight(%msg [%class{0}:%line]%n%xThrowable) %nopex
+      </pattern>
+    </encoder>
+  </appender>
+
+  <appender name="FILE" class="ch.qos.logback.core.FileAppender">
+    <file>build/test.log</file>
+    <append>false</append>
+    <encoder>
+      <pattern>%d{HH:mm:ss.SSSXXX} [%thread] [%mdc] %-5level %logger{36} %msg at %class{0}:%line%n</pattern>
+    </encoder>
+  </appender>
+  <root level="debug">
+    <appender-ref ref="STDOUT"/>
+    <appender-ref ref="FILE"/>
+  </root>
+
+  <!-- Log at different levels for different 3rd party components   -->
+  <logger name="org.apache" level="${project.logging.3rdparty.apache:-info}"/>
+  <logger name="httpclient" level="${project.logging.3rdparty.apache:-info}"/>
+  <logger name="org.springframework" level="${project.logging.3rdparty.spring:-info}"/>
+  <logger name="org.hibernate" level="${project.logging.3rdparty.hibernate:-info}"/>
+  <logger name="com.amazonaws" level="${project.logging.3rdparty.amazon:-info}"/>
+  <logger name="org.flywaydb" level="${project.logging.3rdparty.flyway:-info}"/>
+  <logger name="org.eclipse.jetty" level="${project.logging.3rdparty.jetty:-info}"/>
+  <logger name="org.eclipse.jgit" level="${project.logging.3rdparty.jgit:-info}"/>
+
+</configuration>

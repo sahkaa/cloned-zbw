@@ -1,0 +1,231 @@
+@import 'palette';
+
+// Error messages
+.alert {
+  display: flex;
+  padding: 0;
+  background-color: white;
+  border-radius: 0;
+  color: map-get($df-dark, 4);
+
+  p {
+    white-space: normal;
+    text-align: left;
+  }
+
+  &.alert-danger {
+    border: 1px solid $au-red;
+    background-color: white;
+  
+    i {
+      color: white;
+      background-color: $au-red;
+    }
+  }
+
+  &.alert-warning {
+    border: 1px solid $au-amber;
+    background-color: white;
+  
+    i {
+      color: white;
+      background-color: $au-amber;
+    }
+  }
+
+  &.alert-success {
+    border: 1px solid $au-green;
+    background-color: white;
+  
+    i {
+      color: white;
+      background-color: $au-green;
+    }
+  }
+
+  i {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+    width: 40px;
+  }
+
+  p {
+    margin: 0;
+    padding: .75rem 1.25rem;
+  }
+}
+
+// Proto Toolbar
+.df-proto-toolbar {
+  right: 5px;
+  bottom: 5px;
+}
+
+// User Profile
+.df-user-profile {
+  div.d-flex.justify-content-between > .df-user-profile__img-container {
+    margin-right: 0;
+
+    &::before {
+      content: '\f007';
+    }
+  }
+
+  .df-dropdown__button {
+    &::after,
+    .ml-1 {
+      display: none;
+    }
+  }
+}
+
+// Sections
+.section {
+  &__header {
+    font-size: 16px;
+    color: map-get($au-gray, 1);
+    background-color: map-get($au-neutral, 4);
+
+    h1 {
+      font-size: 16px;
+    }
+  }
+  
+  &__sub-header {
+    font-size: 14px;
+    color: map-get($au-gray, 1);
+    background-color: map-get($au-neutral, 5);
+  }
+
+  &__body {
+    overflow: auto;
+  }
+
+  &__left {
+    width: 250px;
+    background: white;
+    border-right: 1px solid map-get($au-gray, 2);
+  }
+
+  &__right {
+    background: white;
+  }
+}
+
+
+// User
+.user {
+  &-status {
+    &--active {
+      color: $au-green;
+    }
+  }
+}
+
+// Sidebar
+.df-sidebar__item--active > a::before {
+  content: '\2022';
+}
+
+// Modal
+.df-modal {
+  text-align: left;
+  white-space: normal;
+
+  &__content {
+    overflow: visible;
+  }
+}
+
+.modal {
+  &__header {
+    color: white;
+    background-color: map-get($au-neutral, 4);
+    border-top-right-radius: 3px;
+    border-top-left-radius: 3px;
+
+    h1 {
+      font-size: 16px;
+    }
+  }
+
+  &__icon {
+    &--amber {
+      color: $au-amber;
+    }
+  }
+
+  &__close {
+    left: 7px;
+  }
+
+  &__footer {
+    border-top: 1px solid map-get($au-gray, 1);
+  }
+}
+
+// Icons
+.df-icon {
+  &--green {
+    color: $au-green;
+  }
+
+  &--gray {
+    color: map-get($au-neutral, 3);
+  }
+
+  &--twitter {
+    color: #1da1f2
+  }
+
+  &--facebook {
+    color: #3b5998
+  }
+}
+
+// Pro Tips
+.pro-tip {
+  background: white;
+  padding: 10px;
+  display: block;
+
+  &--blue {
+    border-left: 3px solid $au-blue;
+  }
+
+  &--gray-bg {
+    background-color: map-get($au-neutral, 1);
+  }
+
+  &--amber {
+    border-left: 3px solid $au-amber;
+  }
+}
+
+// URLs
+.url {
+  color: $au-blue;
+
+  &:hover {
+    color: $au-blue-hover;
+  }
+
+  &:active {
+    color: $au-blue-active;
+  }
+
+  &--disabled {
+    color: map-get($au-neutral, 3);
+    pointer-events: none;
+  }
+}
+
+// Loader
+.df-loader {
+  &--sm {
+    width: 30px;
+    height: 30px;
+  }
+}

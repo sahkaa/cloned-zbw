@@ -1,0 +1,6 @@
+dependencies {
+    runtime 'com.h2database:h2'
+
+    compile project(":service:aurea-boot-starter:rest-api-user-oauth2-starter")
+    compile 'org.flywaydb:flyway-core'
+}
