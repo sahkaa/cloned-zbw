@@ -1,0 +1,81 @@
+#!groovy
+//This is the RC pipeline which will normally run once every night
+//and will build a shippable output for the service, which includes:
+//build, deploy docker image and trigger deployment pipeline
+
+def pipelineScriptPath = "cicd/pipeline/"
+def buildFlow
+
+pipeline {
+    options {
+        disableConcurrentBuilds()
+    }
+    agent {
+        label 'nodejs_9.11&&browsers'
+    }
+    environment {
+        DOCKER_HOST = 'tcp://dl1.aureacentral.com:2375'
+    }
+    stages {
+        stage('Checkout code') {
+            steps {
+                script {
+                    println("Deploying on env $ENV_NAME with AUREA_API_UI_URL ${AUREA_API_UI_URL} and BACKEND_URL ${BACKEND_URL}")
+                    buildFlow = load pipelineScriptPath + "util/buildUtil.groovy"
+                    buildFlow.checkout()
+                }
+            }
+        }
+        stage('Build UI') {
+            steps {
+                script {
+                    buildFlow.buildUI(ENV_NAME)
+                }
+            }
+        }
+        stage('Build service') {
+            steps {
+                script {
+                    buildFlow.buildService()
+                }
+            }
+        }
+        stage('Build and push service docker image') {
+            steps {
+                script {
+                    buildFlow.buildAndPushDocker(ENV_NAME, pwd() + "/service/cloned-zbw-api", "api")
+                }
+            }
+        }
+        stage('Push UI docker image') {
+            steps {
+                script {
+                    buildFlow.buildAndPushDocker(ENV_NAME, pwd() + "/ui", "ui")
+                }
+            }
+        }
+        stage('Deployment to dev env') {
+            steps {
+                script {
+                    def deployFlow = load pipelineScriptPath + "util/deployUtil.groovy"
+                    deployFlow.deploy()
+                }
+            }
+        }
+        stage('Preparing devspaces image') {
+            steps {
+                script {
+                    buildFlow.buildAndPushDocker("latest", pwd() + "/devspaces", "devspaces")
+                }
+            }
+        }
+    }
+    post {
+        always {
+            script {
+                def notifyFlow = load pipelineScriptPath + "util/notifyUtil.groovy"
+                notifyFlow.notifyBuild(currentBuild.result)
+            }
+        }
+    }
+}

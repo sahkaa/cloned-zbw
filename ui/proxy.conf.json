@@ -1,0 +1,10 @@
+{
+  "/api": {
+    "target": "http://mockbin.com/request",
+    "secure": true,
+    "changeOrigin": true,
+    "pathRewrite": {
+      "^/api": ""
+    }
+  }
+}

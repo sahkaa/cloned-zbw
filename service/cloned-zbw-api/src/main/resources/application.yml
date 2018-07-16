@@ -1,0 +1,60 @@
+aurea:
+  api:
+    info:
+      title: Zero Based Website API
+      license: UNLICENSED
+      version: 1.0.0
+    cors:
+      allowedOrigins: http://localhost:4000, ${aurea.api.uiUrl}
+      allowedHeaders: Content-Type,Authorization,Pragma
+      allowedMethods: POST,PUT,PATCH,GET,OPTIONS,DELETE
+      maxAge: 3600
+    securitySchemeKeyName: ZeroBasedWebsite
+
+server.error.whitelabel.enabled: false
+spring:
+  profiles:
+    active: mail-local
+  datasource:
+    url: jdbc:mysql://devfactory-aurora-1.cluster-cd1ianm7fpxp.us-east-1.rds.amazonaws.com:3306/d_zero_base
+    driver-class-name: com.mysql.jdbc.Driver
+  data:
+    rest:
+      base-path: /api
+  jpa:
+    generate-ddl: false
+    show-sql: true
+    hibernate:
+      ddl-auto: validate
+  jackson:
+    serialization:
+      FAIL_ON_EMPTY_BEANS: false
+  mail:
+    host: email-smtp.us-east-1.amazonaws.com
+    username: ${MAIL_HOST_USERNAME}
+    password: ${MAIL_HOST_PASSWORD}
+    properties:
+      mail:
+        transport:
+          protocol: smtp
+        smtp:
+          port: 25
+          auth: true
+          starttls:
+            enable: true
+            required: true
+
+springfox:
+  documentation:
+    swagger:
+      v2:
+        path: /api-docs
+
+security:
+  oauth2:
+    client:
+      client-id: zwbapp
+      client-secret: zwbsecret
+    authorization:
+      check-token-access: isAuthenticated()
+

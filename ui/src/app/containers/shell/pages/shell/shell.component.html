@@ -1,0 +1,92 @@
+<df-topbar>
+  <div class="left-group d-flex justify-content-between align-items-center px-lg-3"
+       #topbar
+       [@topbarState]="sidebarState"
+       (@topbarState.start)="onTopbarAnimationStart(topbar)"
+       (@topbarState.done)="onTopbarAnimationDone(topbar)"
+       [class.px-2]="isSidebarOpen"
+       [class.px-3]="!isSidebarOpen">
+    <app-logo class="d-flex align-items-center py-2 py-lg-3"
+              *ngIf="isLogoVisible"
+              [@logoState]>
+    </app-logo>
+    <button class="hamburger d-block d-lg-none p-0"
+            type="button"
+            (click)="onHamburgerClick()">
+      <span class="hamburger__wrapper d-flex flex-wrap align-content-between">
+        <span class="hamburger__line d-block"></span>
+        <span class="hamburger__line d-block"></span>
+        <span class="hamburger__line d-block"></span>
+      </span>
+    </button>
+  </div>
+
+  <div class="center-group d-flex align-items-stretch pl-3">
+    <div class="df-topbar-links d-none d-lg-flex align-items-stretch">
+      <!-- <a class="d-flex align-items-center"
+         routerLinkActive="active"
+         routerLink="/home">
+        <span class="df-topbar-link__text">Home</span>
+      </a> -->
+    </div>
+  </div>
+
+  <div class="right-group pr-lg-3 d-flex align-items-center">
+    <df-user-profile class="profile__wrapper"
+                     [showMessage]="false"
+                     [image]="user.image"
+                     (click)="closeSidebar()">
+      <div class="mb-2 profile">
+        <h5 class="mb-1 d-flex align-items-center profile__name">
+          {{user.firstName}} {{user.lastName}}
+          <i class="fa fa-circle ml-2 profile__status profile__status--{{user.status}}"
+             aria-hidden="true"
+             ngbTooltip="You are {{user.status}}"
+             placement="bottom"
+             container="body">
+          </i>
+        </h5>
+        <p class="mb-0 profile__email">{{user.username}}</p>
+      </div>
+      <button class="dropdown-item" type="button" (click)="onSignOutClick()">Logout</button>
+    </df-user-profile>
+  </div>
+</df-topbar>
+
+<div class="col p-0 d-flex">
+  <df-sidebar class="d-block df-custom-scroll"
+              *ngIf="isSidebarOpen"
+              [@sidebarState]
+              [disableButton]="true"
+              [open]="true">
+    <div class="sidebar__primary-group d-inline-block">
+      <df-sidebar-item [hasIcon]="false" [link]="item.link" *ngFor="let item of primaryGroup">
+        <a class="h5"
+           [routerLink]="item.link"
+           routerLinkActive="active"
+           [routerLinkActiveOptions]="{exact: true}"
+           [ngbTooltip]="item.label"
+           placement="right"
+           container="body">
+          <i class="fa {{item.icon}}" aria-hidden="true">
+            <df-badge [count]="item.count" *ngIf="item.count > 0" placement="bottom-right"></df-badge>
+          </i>
+        </a>
+      </df-sidebar-item>
+    </div>
+  </df-sidebar>
+
+  <main class="d-flex flex-column col p-0"
+        [class.no-scroll]="showOverlay">
+    <div class="overlay"
+        *ngIf="showOverlay"
+        [@overlayState]
+        (click)="closeSidebar()"></div>
+    <router-outlet></router-outlet>
+  </main>
+</div>
+
+<!-- badges -->
+<ng-template #auxTemplate let-data="data" let-item="item">
+  <span class="badge badge--{{data.class}}">{{data.info}}</span>
+</ng-template>

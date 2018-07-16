@@ -1,0 +1,21 @@
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: cloned-zbw-api-deployment
+  labels:
+    app: cloned-zbw-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cloned-zbw-api
+  template:
+    metadata:
+      labels:
+        app: cloned-zbw-api
+    spec:
+      containers:
+      - name: cloned-zbw-api
+        image: registry2.swarm.devfactory.com/cloned-zbw/api:dev
+        ports:
+        - containerPort: 8080

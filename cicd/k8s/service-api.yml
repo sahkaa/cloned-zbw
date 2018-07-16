@@ -1,0 +1,11 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: cloned-zbw-api-service
+spec:
+  selector:
+    app: cloned-zbw-api
+  ports:
+  - protocol: TCP
+    port: 8080
+    targetPort: 8080

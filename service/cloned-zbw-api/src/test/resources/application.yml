@@ -1,0 +1,44 @@
+aurea:
+  api:
+    info:
+      title: Zero Based Website API
+      license: UNLICENSED
+      version: 1.0.0
+    cors:
+      allowedOrigins: http://localhost:4000, ${aurea.api.uiUrl}
+      allowedHeaders: Content-Type,Authorization,Pragma
+      allowedMethods: POST,PUT,PATCH,GET,OPTIONS,DELETE
+      maxAge: 3600
+    securitySchemeKeyName: ZeroBasedWebsite
+
+spring:
+  datasource:
+    url: jdbc:h2:mem:zwb_h2_db
+    driver-class-name: org.h2.Driver
+  data:
+    rest:
+      base-path: /api
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: none
+  jackson:
+    serialization:
+      FAIL_ON_EMPTY_BEANS: false
+  mail:
+    host: localhost
+    port: 25
+    username:
+    password:
+    properties:
+      mail:
+        smtp:
+          auth: false
+          starttls:
+            enable: false
+
+security:
+  oauth2:
+    client:
+      client-id: test-id
+      client-secret: test-secret

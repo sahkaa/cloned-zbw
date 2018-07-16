@@ -1,0 +1,61 @@
+apply plugin: 'checkstyle'
+apply plugin: 'findbugs'
+apply plugin: 'pmd'
+apply plugin: 'cpd'
+apply plugin: 'info.solidsoft.pitest'
+
+checkstyle {
+    toolVersion = "7.6"
+    ignoreFailures = false
+    configFile = file("${serviceGradleDir}/static-code-analysis/checkstyle/checkstyle.xml")
+}
+
+findbugs {
+    toolVersion = "3.0.1"
+    ignoreFailures = false
+    excludeFilter = file("${serviceGradleDir}/static-code-analysis/findbugs/exclude.xml")
+}
+
+pmd {
+    toolVersion = "5.5.4"
+    ignoreFailures = false
+    ruleSetFiles = files("${serviceGradleDir}/static-code-analysis/pmd/ruleset.xml")
+    rulePriority = 3
+}
+
+// CPD settings - start
+cpd {
+    language = 'java'
+    toolVersion = '5.2.3'
+    minimumTokenCount = 100 // it approx. equals to 6-10 lines
+}
+
+cpdCheck {
+    reports {
+        text.enabled = false
+        xml.enabled = true
+    }
+    ignoreAnnotations = true
+    source = sourceSets.main.allJava // only java, groovy and scala classes in 'main' sourceSets
+}
+// CPD settings - end
+
+pitest {
+    targetClasses = ['com.aurea.staticcodeanalysis.*']  //by default "${project.group}.*"
+    threads = 4
+    outputFormats = ['XML', 'HTML']
+}
+
+
+tasks.withType(FindBugs) {
+    reports {
+        xml.enabled false
+        html.enabled true
+    }
+}
+tasks.withType(Checkstyle) {
+    reports {
+        xml.enabled false
+        html.enabled true
+    }
+}

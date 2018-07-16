@@ -1,0 +1,5 @@
+{
+  "serverPath": "BACKEND_URL",
+  "apiPath": "BACKEND_URL/api",
+  "production": true
+}

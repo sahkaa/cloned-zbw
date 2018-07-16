@@ -1,0 +1,31 @@
+@import 'palette';
+
+:host {
+  font-size: 15px;
+  font-weight: 500;
+  color: white;
+  background-color: $ka-main;
+  border-top-right-radius: 3px;
+  border-top-left-radius: 3px;
+}
+
+.logo {
+  width: 32px;
+  height: 32px;
+  border: 2px solid white;
+
+  &__name {
+    font-size: 11px;
+    line-height: 1;
+
+    &--long {
+      line-height: 1;
+    }
+  }
+}
+
+.separator {
+  width: 2px;
+  height: 32px;
+  background-color: white;
+}

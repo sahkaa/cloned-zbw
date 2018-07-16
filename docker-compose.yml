@@ -1,0 +1,47 @@
+version: '2.4'
+services:
+  ui:
+    image: registry2.swarm.devfactory.com/cloned-zbw/ui:${ENV_NAME}
+    container_name: ${ENV_NAME}_cloned-zbw_ui
+    network_mode: bridge
+    environment:
+      - BACKEND_URL
+    ports:
+      - 80
+    cpu_quota: 300000
+    mem_limit: 6GB
+    restart: always
+    labels:
+     - "SERVICE_NAME=${ENV_NAME}_cloned-zbw_ui"
+     - "SERVICE_TAGS=trilogy.client_req_max_size=100M,trilogy.expose-v2,trilogy.http,trilogy.internal,trilogy.endpoint=${ENV_NAME}-cloned-zbw-ui.internal-webproxy.aureacentral.com"
+     - "com.trilogy.company=aurea"
+     - "com.trilogy.team=KayakoRewrite.Backend"
+     - "com.trilogy.product=cloned-zbw"
+     - "com.trilogy.service=ui"
+     - "com.trilogy.stage=${ENV_NAME}"
+     - "com.trilogy.maintainer.email=alexander.yushchenko@aurea.com"
+     - "com.trilogy.maintainer.skype=sahkalit"
+  api:
+    image: registry2.swarm.devfactory.com/cloned-zbw/api:${ENV_NAME}
+    container_name: ${ENV_NAME}_cloned-zbw_api
+    network_mode: bridge
+    environment:
+      - SPRING_MAIL_USERNAME
+      - SPRING_MAIL_PASSWORD
+      - BACKEND_URL
+      - AUREA_API_UI_URL
+    ports:
+      - 8080
+    cpu_quota: 300000
+    mem_limit: 6GB
+    restart: always
+    labels:
+      - "SERVICE_NAME=${ENV_NAME}_cloned-zbw_api"
+      - "SERVICE_TAGS=trilogy.client_req_max_size=100M,trilogy.expose-v2,trilogy.http,trilogy.internal,trilogy.endpoint=${ENV_NAME}-cloned-zbw-api.internal-webproxy.aureacentral.com"
+      - "com.trilogy.company=aurea"
+      - "com.trilogy.team=KayakoRewrite.Backend"
+      - "com.trilogy.product=cloned-zbw"
+      - "com.trilogy.service=api"
+      - "com.trilogy.stage=${ENV_NAME}"
+      - "com.trilogy.maintainer.email=alexander.yushchenko@aurea.com"
+      - "com.trilogy.maintainer.skype=sahkalit"

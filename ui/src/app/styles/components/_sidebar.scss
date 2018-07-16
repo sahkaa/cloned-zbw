@@ -1,0 +1,144 @@
+@import '~@devfactory/ngx-df/core/theming/aurea-skin/theming';
+
+$au-sidebar-text-size: 14px;
+
+.df-sidebar {
+  height: 100%;
+  background: $au-gray-main;
+  border-color: $au-gray-main;
+  border-right: none;
+  border-top: none;
+  font-size: $au-sidebar-text-size;
+  font-weight: 500;
+  overflow-y: auto;
+}
+
+.df-sidebar--scrollbars {
+  background: $au-gray-main;
+  border-color: $au-gray-main;
+}
+
+.df-sidebar__slide-button {
+  background: $au-gray-main;
+  border-color: $au-gray-main;
+  width: 0;
+  overflow: hidden;
+}
+
+.df-sidebar__slide-button-icon {
+  background: $au-gray-main;
+}
+
+.df-sidebar-item {
+  box-sizing: content-box;
+  display: block;
+  cursor: pointer;
+}
+
+.df-sidebar__item-container {
+  background: rgba(0, 0, 0, 0);
+  border-color: $au-gray-main;
+  color: $au-light-gray;
+
+  & > a {
+    display: flex;
+    align-items: center;
+    flex-basis: auto;
+    color: inherit;
+    font-size: $au-sidebar-text-size;
+    width: 100%;
+    height: 100%;
+    padding: 11px;
+    font-weight: 500;
+    opacity: 1;
+
+    i {
+      width: 30px;
+      text-align: center;
+      margin-right: 5px;
+      font-size: 1.4em;
+    }
+  }
+
+  &:hover {
+    color: $au-light-gray;
+    font-weight: 500;
+
+    &:not(.df-sidebar__item--open):not(.df-sidebar__item-container--no-icon):hover {
+      width: 100%;
+    }
+  }
+
+  &--no-icon {
+    font-size: $au-sidebar-text-size;
+    padding: 0;
+  }
+}
+
+.df-sidebar__chevron-icon {
+  font-size: $au-sidebar-text-size;
+  width: 17px;
+  text-align: center;
+  font-weight: 600;
+}
+
+.df-sidebar__item__menu {
+  position: relative;
+  z-index: 10;
+
+  &::before {
+    height: 100%;
+    width: 1000px;
+    top: 0;
+    left: -500px;
+    content: '';
+    position: absolute;
+    background: rgba(0, 0, 0, .2);
+    z-index: -1;
+  }
+
+  & > .df-sidebar-item > div[class~='df-sidebar__item-container'] {
+    border: none;
+
+    &:hover {
+      box-shadow: none;
+
+      a {
+        text-decoration: underline;
+      }
+    }
+  }
+}
+
+.df-sidebar__item--active {
+  box-shadow: none;
+  font-weight: 500;
+
+  a,
+  .df-sidebar__item-text,
+  .df-sidebar__item-icon--active {
+    opacity: 1;
+    color: $au-pink;
+  }
+
+  & > a::before {
+    position: absolute;
+    transform: translate(-16px, -4px);
+    content:"\\2022";
+    color: $au-red;
+    font-size: 21px;
+  }
+
+  &.df-sidebar__item--open {
+    box-shadow: none;
+  }
+}
+
+.df-sidebar__item-icon {
+  color: $au-light-gray;
+}
+
+.df-sidebar__item-text {
+  color: $au-light-gray;
+  display: inline-block;
+}

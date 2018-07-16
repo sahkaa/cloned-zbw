@@ -1,0 +1,75 @@
+.df-select-wrapper {
+  border-bottom: 1px solid #cbd1d3;
+  font-size: 13px;
+  // Used to remove the default close sign available in IE
+  // to keep the UI consistent in all browsers.
+
+  input[type='text']::-ms-clear { // sass-lint:disable-line no-vendor-prefixes
+    display: none;
+    width: 0;
+    height: 0;
+  }
+
+  input[type='text']::-ms-reveal { // sass-lint:disable-line no-vendor-prefixes
+    display: none;
+    width: 0;
+    height: 0;
+  }
+}
+
+.df-select__placeholder {
+  font-style: normal;
+}
+
+.df-select--shadow-box {
+  box-shadow: none;
+  border: none;
+  min-width: 130px;
+  background: none;
+  font-size: 13px;
+}
+
+.df-select__filter--shadow-box {
+  min-width: 220px;
+  font-size: 13px;
+}
+
+.df-select__options {
+  width: auto;
+  border-radius: 0;
+  font-size: 13px;
+
+  &--dark {
+    background: $au-gray-main;
+    color: #fff;
+    box-shadow: 0 0 3px rgba(30, 40, 44, .5);
+  }
+
+  &--light {
+    background: #fff;
+    color: #000;
+    box-shadow: 0 0 3px rgba(30, 40, 44, .5);
+  }
+
+  .df-option {
+    font-weight: 500;
+
+    &:hover:not(.df-option--selected) {
+      background: rgba(#000, .1);
+    }
+
+    &--selected {
+      background: $au-green;
+
+      &:hover {
+        background: $au-green;
+      }
+
+      &::before {
+        display: none;
+      }
+    }
+  }
+}
+
+@import '~@devfactory/ngx-df/core/theming/aurea-skin/select-responsive';

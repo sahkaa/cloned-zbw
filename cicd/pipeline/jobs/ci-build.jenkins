@@ -1,0 +1,51 @@
+#!groovy
+//This is the base CI pipeline which will run on every checkin into GIT repo
+//and will try to do the build for the service, which includes:
+//Checkout GIT repo, compile, run code quality checks and run unit tests
+
+def pipelineScriptPath = "cicd/pipeline/"
+def buildFlow
+
+pipeline {
+    options {
+        disableConcurrentBuilds()
+    }
+    agent {
+        label 'nodejs_9.11&&browsers'
+    }
+    triggers {
+        pollSCM('H/5 * * * *')
+    }
+    stages {
+        stage('Checkout code') {
+            steps {
+                script {
+                    buildFlow = load pipelineScriptPath + "util/buildUtil.groovy"
+                    buildFlow.checkout()
+                }
+            }
+        }
+        stage('Build UI') {
+            steps {
+                script {
+                    buildFlow.buildUI()
+                }
+            }
+        }
+        stage('Build service') {
+            steps {
+                script {
+                    buildFlow.buildService("--continue")
+                }
+            }
+        }
+    }
+    post {
+        always {
+            script {
+                def notifyFlow = load pipelineScriptPath + "util/notifyUtil.groovy"
+                notifyFlow.notifyBuild(currentBuild.result)
+            }
+        }
+    }
+}

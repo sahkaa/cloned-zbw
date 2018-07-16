@@ -1,0 +1,3 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com.aurea.boot.autoconfigure.api.config.ApiAutoConfiguration,\
+  com.aurea.boot.autoconfigure.api.config.SwaggerAutoConfiguration
